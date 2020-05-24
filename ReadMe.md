@@ -17,18 +17,18 @@ UETool 是一个各方人员（设计师、程序员、测试）都可以使用�
 
 EDXposed/Xposed:安装软件，打开模块->勾选相应的软件->重启手机->打开软件,点击打开UETool,(PS:第一次会请求悬浮权限)，出现UE图标就是正常状态了。
 
-<img src="/Users/longshihan/project/UEToolTaiChi/image/image-20200524214435404.png" alt="image-20200524214435404" style="zoom:50%;" />
+![](https://github.com/longshihan1/XposedUETool/blob/master/image/image-20200524214435404.png)
 
 捕捉功能：
 
-<img src="/Users/longshihan/project/UEToolTaiChi/image/image-20200524214726294.png" alt="image-20200524214726294" style="zoom:50%;" />
+![](https://github.com/longshihan1/XposedUETool/blob/master/image/image-20200524214726294.png)
 
 相对位置：
 
-<img src="/Users/longshihan/project/UEToolTaiChi/image/image-20200524214837975.png" alt="image-20200524214837975" style="zoom:50%;" />
+![](https://github.com/longshihan1/XposedUETool/blob/master/image/image-20200524214837975.png)
 
 手术刀(页面层级)：
 
-<img src="/Users/longshihan/project/UEToolTaiChi/image/image-20200524214959821.png" alt="image-20200524214959821" style="zoom:50%;" />
+![](https://github.com/longshihan1/XposedUETool/blob/master/image/image-20200524214959821.png)
 
 我们使用酷安网演示了一下具体的功能的使用。基本满足于开发和设计的需求。
