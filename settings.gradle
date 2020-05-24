@@ -1,0 +1,4 @@
+rootProject.name='UEToolTaiChi'
+include ':app'
+include  ':uetool', ':uetool-fresco', ':uetool-base'
+
