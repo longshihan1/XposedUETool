@@ -188,6 +188,7 @@ public class UETMenu extends LinearLayout {
         Activity currentTopActivity = UETool.getInstance().getTargetActivity();
         Log.d("UETMenu", "currentTopActivity: " + (currentTopActivity == null));
         if (currentTopActivity == null) {
+            Log.d("UETMenu","currentTopActivity 为空");
             return;
         }else if (UETMenu.dismiss(currentTopActivity)) {
             return;

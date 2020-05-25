@@ -10,6 +10,7 @@ import android.graphics.drawable.*;
 import android.os.Build;
 import android.text.SpannedString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -391,17 +392,22 @@ public class Util {
             Map activities = (Map) mActivitiesField.get(currentActivityThread);
             for (Object record : activities.values()) {
                 Class recordClass = record.getClass();
+                Log.d("UETMenu","currentTopActivity1234:"+recordClass.getSimpleName());
                 Field pausedField = recordClass.getDeclaredField("paused");
                 pausedField.setAccessible(true);
                 if (!(boolean) pausedField.get(record)) {
                     Field activityField = recordClass.getDeclaredField("activity");
                     activityField.setAccessible(true);
-                    return (Activity) activityField.get(record);
+                    Activity activity=(Activity) activityField.get(record);
+                    Log.d("UETMenu","currentTopActivity123:"+activity.getLocalClassName());
+                    return activity;
                 }
             }
         } catch (Exception e) {
+            Log.d("UETMenu","currentTopActivity123::"+e.getMessage());
             e.printStackTrace();
         }
+        Log.d("UETMenu","currentTopActivity123  为空");
         return null;
     }
 }
