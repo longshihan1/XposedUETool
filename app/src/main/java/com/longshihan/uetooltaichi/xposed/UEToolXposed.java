@@ -124,24 +124,32 @@ public class UEToolXposed implements IXposedHookLoadPackage {
     }
 
     private void startWatch(){
-        if (myBroadcastReceiver!=null){
-            stopWatch();
+        try {
+            if (myBroadcastReceiver!=null){
+                stopWatch();
+            }
+            Log.d(TAG,":"+":启动广播1");
+            IntentFilter intentFilter = new IntentFilter(ACTION);   // 设置广播接收器的信息过滤器，
+            myBroadcastReceiver = new MyBroadcastReceiver();
+            // 在代码中动态注册广播接收器，intentFilter为这个广播接收器能接收到的广播信息的动作类型，用于过滤广播信息
+            context.registerReceiver(myBroadcastReceiver, intentFilter);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        Log.d(TAG,":"+":启动广播1");
-        IntentFilter intentFilter = new IntentFilter(ACTION);   // 设置广播接收器的信息过滤器，
-        myBroadcastReceiver = new MyBroadcastReceiver();
-        // 在代码中动态注册广播接收器，intentFilter为这个广播接收器能接收到的广播信息的动作类型，用于过滤广播信息
-        context.registerReceiver(myBroadcastReceiver, intentFilter);
     }
     private void startWatch(Activity activity){
-        Log.d(TAG,":"+activity.getLocalClassName()+":启动广播");
-        if (myBroadcastReceiver!=null){
-            stopWatch(activity);
-        }
-        IntentFilter intentFilter = new IntentFilter(ACTION);   // 设置广播接收器的信息过滤器，
-        myBroadcastReceiver = new MyBroadcastReceiver();
+        try {
+            Log.d(TAG,":"+activity.getLocalClassName()+":启动广播");
+            if (myBroadcastReceiver!=null){
+                stopWatch(activity);
+            }
+            IntentFilter intentFilter = new IntentFilter(ACTION);   // 设置广播接收器的信息过滤器，
+            myBroadcastReceiver = new MyBroadcastReceiver();
 //         在代码中动态注册广播接收器，intentFilter为这个广播接收器能接收到的广播信息的动作类型，用于过滤广播信息
-        activity.registerReceiver(myBroadcastReceiver, intentFilter);
+            activity.registerReceiver(myBroadcastReceiver, intentFilter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void stopWatch(){
