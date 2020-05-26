@@ -32,7 +32,6 @@ public class UEToolXposed implements IXposedHookLoadPackage {
     private static final String TAG="UEToolXposed";
     private static final String ACTION="com.longshihan.uetooltaichi.xposed";
     private Context context;
-    private int visibleActivityCount;
     private MyBroadcastReceiver myBroadcastReceiver=null;
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -43,79 +42,7 @@ public class UEToolXposed implements IXposedHookLoadPackage {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     XposedBridge.log(TAG+" >> onCreate package:" + param.args.length);
                     context = AndroidAppHelper.currentApplication().getApplicationContext();
-                    if (context.getApplicationContext() instanceof Application){
-                        XposedBridge.log(TAG+" >>yes:");
-                    }
                     startWatch();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((Application)context.getApplicationContext()).registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-                        @Override
-                        public void onActivityCreated(final Activity activity, Bundle savedInstanceState) {
-                            XposedBridge.log(TAG+" >> registerActivityLifecycleCallbacks:onActivityCreated:" +activity.getLocalClassName());
-                            try{
-                                if (activity instanceof FragmentActivity){
-                                    ((FragmentActivity)activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(
-                                            new FragmentManager.FragmentLifecycleCallbacks() {
-
-                                                @Override
-                                                public void onFragmentCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @Nullable Bundle savedInstanceState) {
-                                                    super.onFragmentCreated(fm, f, savedInstanceState);
-
-                                                }
-
-                                                @Override
-                                                public void onFragmentStopped(FragmentManager fm, Fragment f) {
-                                                    super.onFragmentStopped(fm, f);
-//                                                    dismiss(activity);
-                                                }
-                                            }, true);
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onActivityStarted(Activity activity) {
-                            XposedBridge.log(TAG+" >> registerActivityLifecycleCallbacks:onActivityStarted:" +activity.getLocalClassName());
-                            visibleActivityCount++;
-                            if (visibleActivityCount == 1){
-                                stopWatch(activity);
-                                startWatch(activity);
-                            }
-                        }
-
-                        @Override
-                        public void onActivityResumed(Activity activity) {
-                        }
-
-                        @Override
-                        public void onActivityPaused(Activity activity) {
-                        }
-
-                        @Override
-                        public void onActivityStopped(Activity activity) {
-                            XposedBridge.log(TAG+" >> registerActivityLifecycleCallbacks:onActivityStopped:" +activity.getLocalClassName());
-                            visibleActivityCount--;
-                            if (visibleActivityCount == 0 ){
-                                stopWatch(activity);
-                            }
-                            dismiss(activity);
-                        }
-
-                        @Override
-                        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                        }
-
-                        @Override
-                        public void onActivityDestroyed(Activity activity) {
-                        }
-                    });
-                        }
-                    },2000);
-
                 }
             });
         }catch (Exception e){
@@ -133,16 +60,6 @@ public class UEToolXposed implements IXposedHookLoadPackage {
         // 在代码中动态注册广播接收器，intentFilter为这个广播接收器能接收到的广播信息的动作类型，用于过滤广播信息
         context.registerReceiver(myBroadcastReceiver, intentFilter);
     }
-    private void startWatch(Activity activity){
-        Log.d(TAG,":"+activity.getLocalClassName()+":启动广播");
-        if (myBroadcastReceiver!=null){
-            stopWatch(activity);
-        }
-        IntentFilter intentFilter = new IntentFilter(ACTION);   // 设置广播接收器的信息过滤器，
-        myBroadcastReceiver = new MyBroadcastReceiver();
-//         在代码中动态注册广播接收器，intentFilter为这个广播接收器能接收到的广播信息的动作类型，用于过滤广播信息
-        activity.registerReceiver(myBroadcastReceiver, intentFilter);
-    }
 
     private void stopWatch(){
         try {
@@ -154,16 +71,7 @@ public class UEToolXposed implements IXposedHookLoadPackage {
             e.printStackTrace();
         }
     }
-    private void stopWatch(Activity activity){
-        try {
-            if (myBroadcastReceiver!=null) {
-                activity.unregisterReceiver(myBroadcastReceiver);
-                myBroadcastReceiver=null;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
 
    static class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -177,11 +85,5 @@ public class UEToolXposed implements IXposedHookLoadPackage {
                 e.printStackTrace();
             }
         }
-    }
-
-
-
-    private void dismiss(Activity currentTopActivity){
-        UETMenu.dismiss(currentTopActivity);
     }
 }
