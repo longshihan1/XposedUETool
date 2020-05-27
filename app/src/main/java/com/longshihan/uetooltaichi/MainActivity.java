@@ -63,10 +63,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSSL() {
-        stop();
-        IntentFilter intentFilter = new IntentFilter(ReceiveACTION);
-        receiveBroadcastReceiver = new ReceiveBroadcastReceiver();
-        registerReceiver(receiveBroadcastReceiver, intentFilter);
+        try {
+            stop();
+            IntentFilter intentFilter = new IntentFilter(ReceiveACTION);
+            receiveBroadcastReceiver = new ReceiveBroadcastReceiver();
+            registerReceiver(receiveBroadcastReceiver, intentFilter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void stop(){
