@@ -14,6 +14,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        //你自己的keystore信息
+        //你自己的keystore信息
+        release {
+            storeFile file('../Android123.keystore')
+            storePassword '123longhe'
+            keyAlias 'Android'
+            keyPassword 'longhe'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
