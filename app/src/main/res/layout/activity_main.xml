@@ -30,4 +30,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/open" />
 
+    <TextView
+        android:id="@+id/openSSL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="openSSL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <TextView
+        android:id="@+id/closeSSL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="closeSSL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/openSSL"
+        app:layout_constraintVertical_bias="0.386" />
 </androidx.constraintlayout.widget.ConstraintLayout>
