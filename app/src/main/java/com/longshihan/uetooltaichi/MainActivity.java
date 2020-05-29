@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         open = findViewById(R.id.open);
         close=findViewById(R.id.close);
-        openSSL=findViewById(R.id.openSSL);
-        closeSSL=findViewById(R.id.closeSSL);
+
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,19 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 UETool.dismissUETMenu();
             }
         });
-        openSSL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isOpenSSL=true;
-            }
-        });
-        closeSSL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isOpenSSL=false;
-            }
-        });
-
         initSSL();
     }
 
@@ -89,15 +75,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent1) {
             try {
-                int type=intent1.getIntExtra(ACTIONTYPE_Receive,-1);
-                Log.d(TAG, ":" + "收听:"+type);
-                if (type==100){//通过插件进程，我需要知道现在有没有开启Https证书校验，回复一个广播
-                    Intent intent = new Intent(ACTION);
-                    intent.putExtra("type", 100);
-                    intent.putExtra("isOpenSSL",isOpenSSL);
-                    context.sendBroadcast(intent);
-                    Log.d(TAG, ":" + "返回启动SSL广播:"+isOpenSSL);
-                }
             }catch (Exception e){
                 Log.d(TAG,":"+e.getMessage());
                 e.printStackTrace();

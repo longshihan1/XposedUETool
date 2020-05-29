@@ -31,16 +31,6 @@ public class UEToolXposed implements IXposedHookLoadPackage {
         loadPackageParam = lpparam;
         XposedBridge.log(TAG + " >> current package:" + lpparam.packageName);
         try {
-//            findAndHookMethod("android.app.Application", lpparam.classLoader, "attach", Context.class, new XC_MethodHook() {
-//                        @Override
-//                        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-//                            Log.d(TAG, "Hooking Application:attach");
-//                            XposedBridge.log(TAG + " >> attach:" + param.args.length);
-//                            context = (Context) param.args[0];
-//                            startSSL();
-//                        }
-//                    }
-//            );
             XposedHelpers.findAndHookMethod(Application.class, "onCreate", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -54,12 +44,7 @@ public class UEToolXposed implements IXposedHookLoadPackage {
         }
     }
 
-    private void startSSL() {
-        Intent intent = new Intent(ReceiveACTION);
-        intent.putExtra(ACTIONTYPE_Receive, 100);
-        context.sendBroadcast(intent);
-        Log.d(TAG, ":" + ":启动SSL广播");
-    }
+
 
     private void startWatch() {
         if (myBroadcastReceiver != null) {
@@ -95,12 +80,6 @@ public class UEToolXposed implements IXposedHookLoadPackage {
                         || type == MenuHelper.Type.TYPE_UNKNOWN) {
                     Log.d(TAG, "type:UETool:" + type);
                     UETMenu.open(type);
-                } else if (type == 100) {//拿到SSL判断说明
-                    boolean isSSL = intent1.getBooleanExtra("isOpenSSL", false);
-                    if (isSSL) {
-                        Log.d(TAG, "type:SSL:" + type);
-                        SSLTrust.initSSLListener(currentPackageName, loadPackageParam,context);
-                    }
                 }
             } catch (Exception e) {
                 Log.d(TAG, ":" + e.getMessage());
